@@ -3,10 +3,9 @@ require("@nomiclabs/hardhat-etherscan");
 require("hardhat-deploy");
 require("solidity-coverage");
 require("hardhat-gas-reporter");
-require("hardhat-contract-sizer");
 require("dotenv").config();
 
-
+const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || process.env.ALCHEMY_MAINNET_RPC_URL || ""
 const RINKEBY_RPC_URL = process.env.RINKEBY_RPC_URL;
 const PRIVATE_KEY = process.env.MNEMONIC;
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
@@ -17,6 +16,9 @@ module.exports = {
   networks: {
     hardhat: {
       chainId: 31337,
+      forking: {
+        url: MAINNET_RPC_URL
+      },
       blockConfirmations: 1,
     },
     rinkeby: {
