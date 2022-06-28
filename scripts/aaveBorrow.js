@@ -13,6 +13,24 @@ async function main() {
   console.log("Depositing...");
   await lendingPool.deposit(wethTokenAddress, AMOUNT, deployer, 0);
   console.log("Deposited!");
+
+  let { availableBorrowsETH, totalDebtETH } = await getBorrowUserData(lendingPool, deployer);
+  const daiPrice = await getDaiPrice();
+}
+
+async function getDaiPrice() {
+  const daiEthPriceFeed = await ethers.getContractAt("AggregatorV3Interface", networkConfig[network.config.chainId].daiEthPriceFeed);
+  const price = (await daiEthPriceFeed.latestRoundData())[1];
+  console.log(`The DAI/ETH price is ${price.toString()}`);
+  return price;
+}
+
+async function getBorrowUserData(lendingPool, account) {
+  const { totalCollateralETH, totalDebtETH, availableBorrowsETH } = await lendingPool.getUserAccountData(account);
+  console.log(`You have ${totalCollateralETH} wroth of ETH deposited.`);
+  console.log(`You have ${totalDebtETH} worth of ETH borrowed.`);
+  console.log(`You can borrow ${availableBorrowsETH} worth of ETH.`);
+  return { availableBorrowsETH, totalDebtETH }
 }
 
 async function approveErc20(erc20Address, spenderAddress, amountToSpend, account) {
