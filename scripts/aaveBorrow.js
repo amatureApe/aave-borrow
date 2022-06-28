@@ -2,6 +2,12 @@ const { getWeth } = require("../scripts/getWeth");
 
 async function main() {
   await getWeth()
+  const { deployer } = await getNamedAccounts();
+
+}
+
+async function getLendingPool() {
+
 }
 
 main()
