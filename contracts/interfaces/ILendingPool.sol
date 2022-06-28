@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: agpl-3.0
-pragma solidity 0.8.7;
+pragma solidity 0.6.12;
 pragma experimental ABIEncoderV2;
 
 import {ILendingPoolAddressesProvider} from "@aave/protocol-v2/contracts/interfaces/ILendingPoolAddressesProvider.sol";
@@ -158,7 +158,7 @@ interface ILendingPool {
         address stableDebtAddress,
         address variableDebtAddress,
         address intereestRateStrategyAddress
-    );
+    ) external;
 
     function setReserveInterestRateStrategyAddress(
         address reserve,
